@@ -2,6 +2,8 @@
   let calc_displayed = document.getElementById("calc_display");
   console.log(calc_displayed);
 
+  let clearArray = [];
+
 /*String that is displayed*/
   let displayed = calc_displayed.innerHTML;
   console.log(displayed);
@@ -14,7 +16,7 @@
   console.log(simpleKeys);
 
   equals.addEventListener('click', calculatEvListener);
-  // clear_button.addEventListener('click', clearEvListener);
+  clear_button.addEventListener('click', clearEvListener);
 
   for (let i=0; i<simpleKeys.length; i++){
       simpleKeys[i].addEventListener('click', simpleKeyEvListener);
@@ -27,16 +29,36 @@
 function simpleKeyEvListener(){
   keyInput = event.target.innerHTML;
   console.log(keyInput);
-  displayed = calc_displayed.innerHTML = mathString += keyInput;
+  mathString = displayed = calc_displayed.innerHTML += keyInput;
   console.log(mathString);
 }
 
 function calculatEvListener(){
   if (mathString !== ""){
-    eval(mathString)
-    
+    calc_displayed.innerHTML = eval(mathString)
+  } else {
+    calc_displayed.innerHTML = "nothing to calculate";
   }
 }
+
+function clearEvListener(){
+  clearArray.push(event.target);
+  calc_displayed.classList.add( 'display_clear' );
+
+  if (mathString !== ""){
+    calc_displayed.innerHTML = "When you hit the C button, you erase my memory. If you want to store your calculations, use the CE button."
+  } else {
+    calc_displayed.innerHTML = "You just erased my memory. If you want to store your calculations, use the CE button.";
+  }
+    setTimeout (function(){
+      if (clearArray.length >= 1){
+        mathString = displayed = calc_displayed.innerHTML = "";
+        calc_displayed.classList.remove( 'display_clear' );
+      }
+    }, 2000);
+}
+
+
 
 
 
