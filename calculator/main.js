@@ -1,20 +1,90 @@
-let number = document.querySelectorAll("number");
-let displayed = document.getElementById("calc_display").innerHTML;
-let beingCalculated = "";
+/*Element for the container that displays numbers*/
+  let calc_displayed = document.getElementById("calc_display");
+  console.log(calc_displayed);
 
+/*String that is displayed*/
+  let displayed = calc_displayed.innerHTML;
+  console.log(displayed);
 
-console.log(displayed);
+/*Button classes & ids- with EventListeners added*/
+  let equals = document.getElementById("equals");
+  let clear_button = document.getElementById("clear");
 
-number.addEventListener('click', enterNumbers, false);
+  let simpleKeys = document.getElementsByClassName("easy");
+  console.log(simpleKeys);
 
-function enterNumbers(){
-    number = this.innerHTML;
-    displayed += number;
+  equals.addEventListener('click', equalsEvListener);
+  clear_button.addEventListener('click', clearEvListener);
+
+  for (let i=0; i<simpleKeys.length; i++){
+      simpleKeys[i].addEventListener('click', simpleKeyEvListener);
+    }
+
+/*Operational variables and functions*/
+  let beingCalculated = "";
+
+function simpleKeyEvListener(){
+  let mathString = event.target.innerHTML;
+  console.log(mathString);
+  displayed = calc_displayed.innerHTML += mathString;
 }
 
 
 
 
+
+/*HARD MODE starts here*/
+/*Element for the container that displays numbers*/
+//   let calc_displayed = document.getElementById("calc_display");
+//   console.log(calc_displayed);
+//
+// /*String that is displayed*/
+//   let displayed = calc_displayed.innerHTML;
+//   console.log(displayed);
+//
+// /*Button classes & ids*/
+//   let numberKeys = document.getElementsByClassName("number");
+//   console.log(numberKeys);
+//   let plusMinusKeys = document.getElementsByClassName("plusMinus");
+//   let multiplyDivide = document.getElementsByClassName("multiplyDivideModulo");
+//
+//   let equals = document.getElementById("equals");
+//   let clear_button = document.getElementById("clear");
+//
+// /*Operational variables and functions*/
+//   let beingCalculated = "";
+//
+//
+// for (let i=0; i<numberKeys.length; i++){
+//     numberKeys[i].addEventListener('click', numberKeyEvListener);
+//   }
+//
+// for (let i=0; i<plusMinusKeys.length; i++){
+//       plusMinusKeys[i].addEventListener('click', plusMinusKeysEvListener);
+//     }
+//
+// for (let i=0; i<multiplyDivide.length; i++){
+//       numberKeys[i].addEventListener('click', multiplyDivideEvListener);
+//     }
+
+
+
+//
+// function numberKeyEvListener(){
+//     let numberEntry_s = event.target.innerHTML;
+//     displayed = calc_displayed.innerHTML += numberEntry_s;
+//     console.log(numberEntry_s);
+//     // document.getElementById("calc_display").innerHTML="";
+//     console.log(displayed);
+// }
+//
+// function plusMinusKeysEvListener(){
+//     let pMkey = event.target.innerHTML;
+//     displayed = calc_displayed.innerHTML += pMkey;
+//     console.log(pMkey);
+//     // document.getElementById("calc_display").innerHTML="";
+//     console.log(displayed);
+// }
 
 
 

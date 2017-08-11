@@ -1,7 +1,12 @@
+/*Cool image file - https://pixabay.com/en/colors-modern-contemporary-graphic-1512911/ */
+
+
+
 body{
   margin: 20px;
-  height: 375px;
-  width: 667px;
+  height: 667px;
+  width: 375px;
+  background: #5A386A;
 }
 
 .device_wrapper{
@@ -16,19 +21,21 @@ body{
 button{
   font-family: 'Raleway', sans-serif;
   font-size: x-large;
-  border: 1px solid #767F8F;
+  border: 1px solid #2F0075;
   padding: 1vh 2vw 2vh;
-  margin: 0;
+  margin: 1px;
 }
 
+
 .rectangle{
-  background: #DDDDDD;
-  height: 18vh;
-  width: 54vw;
+  text-align: right;
+  background: #FEFFFC;
+  height: 16vh;
+  width: 55vw;
 }
 
 .square {
-  height: 18vh;
+  height: 16vh;
   width: 18vw;
 }
 
