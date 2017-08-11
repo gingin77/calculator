@@ -42,21 +42,61 @@ function calculatEvListener(){
 }
 
 function clearEvListener(){
-  clearArray.push(event.target);
-  calc_displayed.classList.add( 'display_clear' );
+  clearArray.push(event.target.innerHTML);
+  console.log(clearArray);
 
-  if (mathString !== ""){
-    calc_displayed.innerHTML = "When you hit the C button, you erase my memory. If you want to store your calculations, use the CE button."
-  } else {
-    calc_displayed.innerHTML = "You just erased my memory. If you want to store your calculations, use the CE button.";
-  }
+  if(mathString !== "" && (clearArray.length == 1)){
+    calc_displayed.classList.add( 'display_text' );
+    calc_displayed.innerHTML = "You just erased my memory."
+
+      setTimeout (function(){
+          mathString = displayed = calc_displayed.innerHTML = "";
+          calc_displayed.classList.remove( 'display_text' );
+          clearArray.length = 0;
+          console.log("This is the clearArray after a full mathString and one click",  (clearArray));
+          console.log(mathString);
+      }, 2000);
+  }if (mathString === "" && (clearArray.length == 1)){
+      calc_displayed.classList.add( 'display_dim');
+
     setTimeout (function(){
-      if (clearArray.length >= 1){
+
         mathString = displayed = calc_displayed.innerHTML = "";
-        calc_displayed.classList.remove( 'display_clear' );
-      }
+        console.log("The display should have flashed dim");
+        calc_displayed.classList.remove( 'display_dim');
     }, 2000);
-}
+
+  }else if (mathString === "" && (clearArray.length >= 2)){
+    setTimeout (function(){
+        calc_displayed.classList.add( 'display_dim', 'display_text' );
+        mathString = displayed = calc_displayed.innerHTML = "What do you want to calculate?";
+        calc_displayed.classList.remove( 'display_dim', 'display_text' );
+    }, 2000);
+    }
+    console.log(clearArray);
+  }
+
+
+
+
+
+
+
+
+
+
+  // if(mathString === "" && (clearArray.length >= 2)){
+  //   calc_displayed.classList.add( 'display_dim' );
+  //
+  //   setTimeout (function(){
+  //     if (clearArray.length >= 2){
+  //
+  //       displayed = calc_displayed.innerHTML = "What do you want to calculate?";
+  //       calc_displayed.classList.remove( 'display_dim' );
+  //       clearArray.length = 0;
+  //     }
+  //   }, 500);
+  // }
 
 
 
@@ -119,6 +159,25 @@ function clearEvListener(){
 
 
 
+//
+// function clearEvListener(){
+//   clearArray.push(event.target);
+//   calc_displayed.classList.add( 'display_clear' );
+//
+//   if (mathString !== ""){
+//     calc_displayed.innerHTML = "When you hit the C button, you erase my memory. If you want to store your calculations, use the CE button."
+//   } else {
+//     calc_displayed.innerHTML = "You just erased my memory. If you want to store your calculations, use the CE button.";
+//   }
+//     setTimeout (function(){
+//       if (clearArray.length >= 1){
+//         mathString = displayed = calc_displayed.innerHTML = "";
+//         calc_displayed.classList.remove( 'display_clear' );
+//       }
+//     }, 2000);
+// }
+//
+//
 
 
 

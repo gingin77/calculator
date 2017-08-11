@@ -1,4 +1,17 @@
-/*Cool image file - https://pixabay.com/en/colors-modern-contemporary-graphic-1512911/ */
+/*Cool image file - https://pixabay.com/en/colors-modern-contemporary-graphic-1512911/
+
+Grey-lavendar Colors Color Palette
+http://www.color-hex.com/color-palette/425
+
+Colors in Palette
+Hex	RGB
+#d2d4dc	(210,212,220)
+#afafaf	(175,175,175)
+#f8f8fa	(248,248,250)
+#e5e6eb	(229,230,235)
+#c0c2ce	(192,194,206)
+
+*/
 
 
 
@@ -29,15 +42,20 @@ button{
 
 .rectangle{
   text-align: right;
-  background: #FEFFFC;
+  background: #F8F8FA;
   height: 16vh;
   width: 55vw;
 }
 
-.display_clear{
+.display_text{
   font-size: small;
   text-align: center;
 }
+
+.display_dim{
+  background: #E5E6EB;
+}
+
 
 .square {
   height: 16vh;
