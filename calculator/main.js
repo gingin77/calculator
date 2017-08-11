@@ -13,20 +13,29 @@
   let simpleKeys = document.getElementsByClassName("easy");
   console.log(simpleKeys);
 
-  equals.addEventListener('click', equalsEvListener);
-  clear_button.addEventListener('click', clearEvListener);
+  equals.addEventListener('click', calculatEvListener);
+  // clear_button.addEventListener('click', clearEvListener);
 
   for (let i=0; i<simpleKeys.length; i++){
       simpleKeys[i].addEventListener('click', simpleKeyEvListener);
     }
 
 /*Operational variables and functions*/
-  let beingCalculated = "";
+  let keyInput = "";
+  let mathString = "";
 
 function simpleKeyEvListener(){
-  let mathString = event.target.innerHTML;
+  keyInput = event.target.innerHTML;
+  console.log(keyInput);
+  displayed = calc_displayed.innerHTML = mathString += keyInput;
   console.log(mathString);
-  displayed = calc_displayed.innerHTML += mathString;
+}
+
+function calculatEvListener(){
+  if (mathString !== ""){
+    eval(mathString)
+    
+  }
 }
 
 
