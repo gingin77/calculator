@@ -1,8 +1,12 @@
 /*Element for the container that displays numbers*/
   let calc_displayed = document.getElementById("calc_display");
-  console.log(calc_displayed);
+  console.log(calc_displayed);/*returns: <button class="rectangle" id="calc_display">-</button> */
 
   let clearArray = [];
+  let equalsArray = [];
+  let operatorControllerArray=[];
+  let operatorControllerArrayClass=[];
+  let operatorControllerArrayClassList=[];
 
 /*String that is displayed*/
   let displayed = calc_displayed.innerHTML;
@@ -14,7 +18,7 @@
 
   let simpleKeys = document.getElementsByClassName("easy");
   let multiplyKey = document.getElementById( "multiply" );
-  console.log(simpleKeys);
+  // console.log(simpleKeys); /*returns an HTML Collection*/
 
   equals.addEventListener('click', calculateEvListener);
   clear_button.addEventListener('click', clearEvListener);
@@ -22,14 +26,24 @@
   for (let i=0; i<simpleKeys.length; i++){
       simpleKeys[i].addEventListener('click', simpleKeyEvListener);
     }
-  multiplyKey.addEventListener('click', simpleKeyEvListener);
+    multiplyKey.addEventListener('click', simpleKeyEvListener);
 
 /*Operational variables and functions*/
   let keyInput = "";
   let mathString = "";
+  let arrayOfSelectEvTargClasses = [];
 
 function simpleKeyEvListener(){
   keyInput = event.target.innerHTML;
+  let eventTargetClasses=event.target.classList;
+  console.log(typeof eventTargetClasses);
+  console.log(eventTargetClasses);
+  console.log(eventTargetClasses[1]);
+
+
+  arrayOfSelectEvTargClasses.push(eventTargetClasses[1]);
+  console.log(arrayOfSelectEvTargClasses);
+
   if (keyInput === "x"){
     keyInput = "*" ;
   }
@@ -38,12 +52,61 @@ function simpleKeyEvListener(){
   console.log(mathString);
 }
 
+
+      // if(eventTargetClass.contains("operator")) {
+      //   console.log = "The classList contains 'operator' ";
+      // } else {
+      //    console.log = "The classList does not contain 'operator'";
+      // } this seems to never get read..... not 100% sure why. Perhaps because I need to be targetting an actual element, not an event.target...
+
+  // keyInput = event.target.innerHTML;
+  // operatorControllerArray.push(event.target);
+  // operatorControllerArrayClass.push(event.target.className);/*if I say, .class, the return says undefined. Check property list. Use .className instead.*/
+  // operatorControllerArrayClassList.push(event.target.classList);
+  //
+  // console.log("This is the first array");
+  // console.log(operatorControllerArray);
+  // console.log("This is the 2nd array with .className");
+  // console.log(operatorControllerArrayClass);
+  // console.log("This is the 3rd array with .classList");
+  // console.log(operatorControllerArrayClassList);/* returns: [DOMTokenList(4)] */
+  // console.log(typeof operatorControllerArrayClassList);
+  // console.log(operatorControllerArrayClassList[0]); /* returns: (4) ["easy", "operator", "square", "multiplyDivideModulo", value: "easy operator square multiplyDivideModulo"] */
+  // // console.log(operatorControllerArrayClassList[0].(0));
+  // console.log(typeof operatorControllerArrayClassList[0]); /* returns: object */
+  //
+  // // my variable for the element classList is operatorControllerArrayClassList
+  // let arrayContains = operatorControllerArrayClassList.contains("operator");
+  //       if(arrayContains) {
+  //       console.log = "The classList contains 'operator' ";
+  //     } else {
+  //        console.log = "The classList does not contain 'operator'";
+  //     }
+
+
+
+
 function calculateEvListener(){
   console.log(mathString);
+  equalsArray.push(event.target.innerHTML);
   if (mathString !== ""){
     calc_displayed.innerHTML = eval(mathString)
   } else {
+    calc_displayed.classList.remove( 'display_text' );
     calc_displayed.innerHTML = "nothing to calculate";
+    setTimeout (function(){
+    calc_displayed.classList.remove( 'display_text' );
+    equalsArray.length = 0;
+  }, 500)
+  }
+  if ((mathString === "") && (equalsArray.length >= 1)){
+    calc_displayed.classList.add( 'display_text' );
+    calc_displayed.innerHTML = "nothing to calculate";
+        setTimeout (function(){
+        calc_displayed.classList.remove( 'display_text' );
+        equalsArray.length = 0;
+        calc_displayed.innerHTML = 0;
+      }, 500)
   }
 }
 
