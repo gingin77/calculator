@@ -13,14 +13,16 @@
   let clear_button = document.getElementById("clear");
 
   let simpleKeys = document.getElementsByClassName("easy");
+  let multiplyKey = document.getElementById( "multiply" );
   console.log(simpleKeys);
 
-  equals.addEventListener('click', calculatEvListener);
+  equals.addEventListener('click', calculateEvListener);
   clear_button.addEventListener('click', clearEvListener);
 
   for (let i=0; i<simpleKeys.length; i++){
       simpleKeys[i].addEventListener('click', simpleKeyEvListener);
     }
+  multiplyKey.addEventListener('click', simpleKeyEvListener);
 
 /*Operational variables and functions*/
   let keyInput = "";
@@ -28,12 +30,16 @@
 
 function simpleKeyEvListener(){
   keyInput = event.target.innerHTML;
+  if (keyInput === "x"){
+    keyInput = "*" ;
+  }
   console.log(keyInput);
   mathString = displayed = calc_displayed.innerHTML += keyInput;
   console.log(mathString);
 }
 
-function calculatEvListener(){
+function calculateEvListener(){
+  console.log(mathString);
   if (mathString !== ""){
     calc_displayed.innerHTML = eval(mathString)
   } else {
@@ -45,9 +51,9 @@ function clearEvListener(){
   clearArray.push(event.target.innerHTML);
   console.log(clearArray);
 
-  if(mathString !== "" && (clearArray.length == 1)){
+  if(mathString !== "" && (clearArray.length >= 1)){
     calc_displayed.classList.add( 'display_text' );
-    calc_displayed.innerHTML = "You just erased my memory."
+    calc_displayed.innerHTML = "You just erased my memory"
 
       setTimeout (function(){
           mathString = displayed = calc_displayed.innerHTML = "";
@@ -55,23 +61,27 @@ function clearEvListener(){
           clearArray.length = 0;
           console.log("This is the clearArray after a full mathString and one click",  (clearArray));
           console.log(mathString);
-      }, 2000);
+      }, 750);
+
   }if (mathString === "" && (clearArray.length == 1)){
       calc_displayed.classList.add( 'display_dim');
 
     setTimeout (function(){
-
         mathString = displayed = calc_displayed.innerHTML = "";
         console.log("The display should have flashed dim");
         calc_displayed.classList.remove( 'display_dim');
-    }, 2000);
+    }, 500);
 
   }else if (mathString === "" && (clearArray.length >= 2)){
+    calc_displayed.classList.add( 'display_dim', 'display_text' );
+    mathString = displayed = calc_displayed.innerHTML = "Use me to calculate!";
+
     setTimeout (function(){
-        calc_displayed.classList.add( 'display_dim', 'display_text' );
-        mathString = displayed = calc_displayed.innerHTML = "What do you want to calculate?";
+        console.log(calc_displayed);
         calc_displayed.classList.remove( 'display_dim', 'display_text' );
-    }, 2000);
+        mathString = displayed = calc_displayed.innerHTML = "",
+        clearArray.length = 0;
+    }, 1500);
     }
     console.log(clearArray);
   }
