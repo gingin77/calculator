@@ -16,7 +16,7 @@ Hex	RGB
 
 body{
   margin: 40px auto; /* or 40px all around when in mobile mode*/
-  height: 667px;
+  height: 550px;
   width: 375px;
   background-image: url('colors-1512911.png');
   position:relative;
@@ -31,8 +31,8 @@ body{
 }
 
 .device_wrapper{
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
 }
 
 .top_row, .rows{
@@ -40,19 +40,20 @@ body{
 }
 
 button{
-  background-color: #7B5A5A;
-  /*background-color: rgba(123, 90, 90. 1)*/
+  /*background-color: #7B5A5A;*/
+  background-color: rgba(123, 90, 90, 0.85);
   font-family: 'Raleway', sans-serif;
-  font-size: x-large;
+  font-size: large;
+  height: 10vh;
   color: #E5DBD9;
   font-weight: 900;
   border: 2px solid #2F0075;
   padding: 1vh 2vw 2vh;
-  margin: 3px;
+  margin: 4px;
 }
 
 button:hover{
-  background-color: rgba(123, 90, 90, 0.5)
+  background-color: rgba(123, 90, 90, 0.5);
   /*opacity: 0.5;*/
 }
 
@@ -61,8 +62,12 @@ button:hover{
   text-align: right;
   color: #2F0075;
   background: #E5DBD9;
-  height: 16vh;
-  width: 55vw;
+  flex-grow: 3;
+  /*width: 50vw;*/
+}
+
+#backspace{
+  flex-grow: 0.3;
 }
 
 
@@ -77,8 +82,9 @@ button:hover{
 
 
 .square {
-  height: 16vh;
-  width: 18vw;
+  /*height: 16vh;*/
+  width: 12vw;
+  flex-grow: 1;
 }
 
 .rows{
@@ -87,6 +93,8 @@ button:hover{
   flex: auto;
 }
 
-.multiply{
-
+#equals{
+  /*width: 22vw;*/
+  font-size: x-large;
+  flex-grow: 6;
 }

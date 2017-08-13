@@ -109,15 +109,17 @@ function calculateEvListener(){
   equalsArray.push(event.target.innerHTML);
   if (mathString !== ""){
     calc_displayed.innerHTML = eval(mathString)
+
   } else {
     calc_displayed.classList.add( 'display_text' );
     calc_displayed.innerHTML = "nothing to calculate";
-    setTimeout (function(){
-    calc_displayed.classList.remove( 'display_text' );
-    equalsArray.length = 0;
-    opRestrictor1.shift();
-    opRestrictorStr.shift();
-  }, 500)
+
+          setTimeout (function(){
+          calc_displayed.classList.remove( 'display_text' );
+          equalsArray.length = 0;
+          opRestrictor1.shift();
+          opRestrictorStr.shift();
+        }, 500)
   }
   if ((mathString === "") && (equalsArray.length >= 1)){
     calc_displayed.classList.add( 'display_text' );
@@ -137,9 +139,12 @@ function clearEvListener(){
   if(mathString !== "" && (clearArray.length >= 1)){
     calc_displayed.classList.add( 'display_text' );
     calc_displayed.innerHTML = "You just erased my memory"
+    opRestrictor1 = [];
+    opRestrictorStr = [];
+    mathString = "";
 
       setTimeout (function(){
-          mathString =/* displayed = */calc_displayed.innerHTML = "";
+          calc_displayed.innerHTML = "";
           calc_displayed.classList.remove( 'display_text' );
           clearArray.length = 0;
           console.log("This is the clearArray after a full mathString and one click",  (clearArray));
@@ -150,19 +155,19 @@ function clearEvListener(){
       calc_displayed.classList.add( 'display_dim');
 
     setTimeout (function(){
-        mathString =/* displayed = */ calc_displayed.innerHTML = "";
+        mathString = calc_displayed.innerHTML = "";
         console.log("The display should have flashed dim");
         calc_displayed.classList.remove( 'display_dim');
     }, 500);
 
   }else if (mathString === "" && (clearArray.length >= 2)){
     calc_displayed.classList.add( 'display_dim', 'display_text' );
-    mathString =/* displayed = */ calc_displayed.innerHTML = "Use me to calculate!";
+    mathString = calc_displayed.innerHTML = "Use me to calculate!";
 
     setTimeout (function(){
         console.log(calc_displayed);
         calc_displayed.classList.remove( 'display_dim', 'display_text' );
-        mathString =/* displayed = */ calc_displayed.innerHTML = "",
+        mathString = calc_displayed.innerHTML = "",
         clearArray.length = 0;
     }, 1500);
     }
