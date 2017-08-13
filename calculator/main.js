@@ -5,6 +5,11 @@
 /*Button classes & ids- with EventListeners added*/
   let equals = document.getElementById("equals");
   let clear_button = document.getElementById("clear");
+  let clear_store = document.getElementById("clear_and_store");
+  let sign_toggle = document.getElementById("plusMinus_toggle");
+  let memory_key = document.getElementById("memory");
+  let sqrt_key = document.getElementById("sqrt");
+  let decimal_key = document.getElementById("decimal");
 
   let simpleKeys = document.getElementsByClassName("easy");
   let multiplyKey = document.getElementById( "multiply" );
@@ -12,6 +17,11 @@
 
   equals.addEventListener('click', calculateEvListener);
   clear_button.addEventListener('click', clearEvListener);
+  // clear_store.addEventListener('click', clearStoreEvListener);
+  memory_key.addEventListener('click', memEvListener);
+  // sqrt_key.addEventListener('click', sqRtEvListener);
+  // sign_toggle.addEventListener('click', signTogEvListener);
+  // decimal_key.addEventListener('click', decEvListener);
 
   for (let i=0; i<simpleKeys.length; i++){
       simpleKeys[i].addEventListener('click', simpleKeyEvListener);
@@ -24,6 +34,8 @@
   let mathString = "";
   let clearArray = [];
   let equalsArray = [];
+  let storedMemoryArray = [];// <used to store mathString values
+  let memoryKeyArray = []; //< used to keep track of how many times the mem key is pressed
   let opRestrictor1 = []; //< use to control 1st position; Allow to accumulate until C or = is pressed
   let opRestrictorStr = [];//< use to control subsequent positions; Str is for string; recycle at .length = 2
   // let previous = opRestrictor1.length-1;
@@ -79,19 +91,6 @@ function simpleKeyEvListener(){
         }
     opRestrictorStr.shift();
   }
-  // }else &&
-  //     ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] !== "operator"))  ||
-  //     ((opRestrictorStr[1] === "operator") && (opRestrictorStr[0] !== "operator") )
-  //
-  // {
-  //           keyInput = event.target.innerHTML;
-  //           if (keyInput === "x"){
-  //             keyInput = "*" ;
-  //           }
-  //           console.log("Here is the keyInput: " + keyInput);
-  //           // mathString = displayed = calc_displayed.innerHTML += keyInput;
-  //           console.log("Here is the mathString after a second key was added: " + mathString);
-
 }
 
 
@@ -173,6 +172,30 @@ function clearEvListener(){
     }
     console.log(clearArray);
   }
+
+function memEvListener(){
+  let memoryEvent=event.target.id;
+  memoryKeyArray.push(memoryEvent);
+  console.log((typeof memoryEvent), (memoryEvent));
+
+  if (memoryKeyArray.length === 1){
+    console.log("the memory button was hit");
+    calc_displayed.classList.add( 'display_text', 'display_dim' );
+    calc_displayed.innerHTML = "MEMORY: Your string is being stored";
+
+          setTimeout (function(){
+          calc_displayed.innerHTML = "Hit the MEM key again to see your stored strings";
+          console.log("Hit the MEM key again to see your stored strings");
+        }, 1200)
+
+        setTimeout (function(){
+          calc_displayed.classList.remove( 'display_text', 'display_dim' );
+          calc_displayed.innerHTML = "";
+          console.log("screen should now be clear");
+        }, 3000)
+  }
+
+}
 
 
 
@@ -345,3 +368,17 @@ function clearEvListener(){
 // if (opRestrictorStr[1] === "number") /*&& (opRestrictorStr[1] === opRestrictorStr[0]))*/ {
 //   console.log("index 1 says'operator'")
 // }
+
+
+// }else &&
+//     ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] !== "operator"))  ||
+//     ((opRestrictorStr[1] === "operator") && (opRestrictorStr[0] !== "operator") )
+//
+// {
+//           keyInput = event.target.innerHTML;
+//           if (keyInput === "x"){
+//             keyInput = "*" ;
+//           }
+//           console.log("Here is the keyInput: " + keyInput);
+//           // mathString = displayed = calc_displayed.innerHTML += keyInput;
+//           console.log("Here is the mathString after a second key was added: " + mathString);

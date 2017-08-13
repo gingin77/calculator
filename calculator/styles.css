@@ -26,7 +26,7 @@ body{
   background-size: cover;
   display:flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   /*background: #5A386A;*/
 }
 
@@ -37,6 +37,7 @@ body{
 
 .top_row, .rows{
   display: flex;
+  justify-content: space-around;
 }
 
 button{
@@ -47,7 +48,8 @@ button{
   height: 10vh;
   color: #E5DBD9;
   font-weight: 900;
-  border: 2px solid #2F0075;
+  border: 3px solid #2F0075;
+  border-radius: 5px;
   padding: 1vh 2vw 2vh;
   margin: 4px;
 }
@@ -61,13 +63,21 @@ button:hover{
 .rectangle{
   text-align: right;
   color: #2F0075;
+  /*color: rgba(229, 219, 217, 0.85);*/
   background: #E5DBD9;
-  flex-grow: 3;
-  /*width: 50vw;*/
+  background-color: rgba(229, 219, 217, 0.85);
+  /*flex-grow: 3;*/
+  width: 100%;
 }
 
 #backspace{
-  flex-grow: 0.3;
+  flex-grow: 0.35;
+  width: 2vw;
+}
+
+#memory{
+  font-size: medium;
+  padding: 1vh 1.1vw 2vh;
 }
 
 
@@ -81,6 +91,11 @@ button:hover{
 }
 
 
+.last_row .square{
+  width: 10vw;
+  /*flex-grow: 0.2;*/
+}
+
 .square {
   /*height: 16vh;*/
   width: 12vw;
@@ -93,8 +108,13 @@ button:hover{
   flex: auto;
 }
 
+.last_row{
+  display: flex;
+  flex-direction: row;
+}
+
 #equals{
   /*width: 22vw;*/
   font-size: x-large;
-  flex-grow: 6;
+  width: 45%;
 }
