@@ -38,12 +38,20 @@
   let memoryKeyArray = []; //< used to keep track of how many times the mem key is pressed
   let opRestrictor1 = []; //< use to control 1st position; Allow to accumulate until C or = is pressed
   let opRestrictorStr = [];//< use to control subsequent positions; Str is for string; recycle at .length = 2
-  // let previous = opRestrictor1.length-1;
-  // let twoPrevious = opRestrictor1.length-2;
+  let previous = opRestrictor1[opRestrictor1.length-1];
+  let twoPrevious = opRestrictor1[opRestrictor1.length-2];
 
-
+function addToMathString() {
+  if (keyInput === "x"){
+        keyInput = "*" ;
+      }//this if statement is needed because I want letter x on the key, but need * in the string
+  console.log("Here is the keyInput: " + keyInput);
+  mathString = calc_displayed.innerHTML += keyInput;
+  console.log("Here is the mathString: " + mathString);
+}
 
 function simpleKeyEvListener(){
+  keyInput = event.target.innerHTML;
   let eventTargetClasses=event.target.classList;
   // console.log((typeof eventTargetClasses), (eventTargetClasses),(eventTargetClasses[1]));// << this line was used to figure out how to obtain the operator and numeric class names.
 
@@ -53,14 +61,15 @@ function simpleKeyEvListener(){
   console.log("This is the opRestrictorStr", (opRestrictorStr));
 
 // Set up a conditional statement to block an operator being in the first string position
-  if (opRestrictor1[0] === "number"){  //this block takes the value associated with a key and gives it to the mathString and the display
-          keyInput = event.target.innerHTML;
-          if (keyInput === "x"){
-                keyInput = "*" ;
-              }//this if statement is needed because I want letter x on the key, but need * in the string
-          console.log("Here is the keyInput: " + keyInput);
-          mathString = calc_displayed.innerHTML += keyInput;
-          console.log("Here is the mathString: " + mathString);
+  if ((opRestrictor1[0] === "number")&&(opRestrictor1.length===1)){  //this block takes the value associated with a key and gives it to the mathString and the display
+      addToMathString(keyInput);
+          // keyInput = event.target.innerHTML;
+          // if (keyInput === "x"){
+          //       keyInput = "*" ;
+          //     }//this if statement is needed because I want letter x on the key, but need * in the string
+          // console.log("Here is the keyInput: " + keyInput);
+          // mathString = calc_displayed.innerHTML += keyInput;
+          // console.log("Here is the mathString: " + mathString);
   }else if (opRestrictor1[0] === "operator")   {
         calc_displayed.classList.add( 'display_text' );
         calc_displayed.innerHTML = "please press a number";
@@ -75,35 +84,70 @@ function simpleKeyEvListener(){
           }, 1000)
   } // Set up a conditional statement that blocks more than one adjacent operator
   if (opRestrictorStr.length > 1) {
-        if ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] === "operator")) {
-          keyInput = "";
-          console.log("the double operator restriction was triggered")
-          calc_displayed.classList.add( 'display_text', 'display_dim' );
-          calc_displayed.innerHTML = "please press a number";
+    console.log("the double operator restriction is being tested");
+    checkOperatorSequence(opRestrictorStr);
 
-              setTimeout (function(){
-                calc_displayed.classList.remove( 'display_text', 'display_dim' );
-                calc_displayed.innerHTML = mathString.slice(0,-1);
-                console.log("This is the mathString after the slice: " + (mathString));
-                // opRestrictorStr.shift();
-                console.log("The opRestrictorStr array was just shifted")
-              }, 1000)
-        }
+        // if ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] === "operator")) {
+        //   mathStringCheck(event.target);
+        //   console.log("mathStringBlock was just called from the simpleKeyEvListener funciton");
+        //   // keyInput = "";
+        //   console.log("the double operator restriction was triggered")
+        //   calc_displayed.classList.add( 'display_text', 'display_dim' );
+        //   calc_displayed.innerHTML = "please press a number";
+    //
+    //           setTimeout (function(){
+    //             calc_displayed.classList.remove( 'display_text', 'display_dim' );
+    //             calc_displayed.innerHTML = mathString = mathString.slice(0,-1);
+    //             console.log("This is the mathString after the slice: " + (mathString));
+    //             // opRestrictorStr.shift();
+    //             console.log("The opRestrictorStr array was just shifted")
+    //           }, 1000)
+    //     // }
     opRestrictorStr.shift();
   }
 }
 
+function checkOperatorSequence(){
+  if ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] === "operator")){
+    // mathStringCheck(event.target);
+    // console.log("mathStringBlock was just called from the simpleKeyEvListener funciton");
+    // keyInput = "";
+    console.log("the double operator restriction was triggered")
+    calc_displayed.classList.add( 'display_text', 'display_dim' );
+    calc_displayed.innerHTML = "please press a number";
+  }else{
+    addToMathString(keyInput);
+    console.log("the double operator restriction was tested but NOT triggered")
+  }
+}
+
+// function mathStringCheck(){
+//   keyInput = "";
+//   console.log("the double operator restriction was triggered")
+//   calc_displayed.classList.add( 'display_text', 'display_dim' );
+//   calc_displayed.innerHTML = "please press a number";
+//
+//       setTimeout (function(){
+//         calc_displayed.classList.remove( 'display_text', 'display_dim' );
+//         calc_displayed.innerHTML = mathString.slice(0,-1);
+//         console.log("This is the mathString after the slice: " + (mathString));
+//         // opRestrictorStr.shift();
+//         console.log("The opRestrictorStr array was just shifted")
+//       }, 1000)
+//   opRestrictorStr.shift();
+// }
+//
+// function mathStringTrim(){
+//   mathString = mathString.slice(0,-1)
+//   console.log("After the splice, mathString is: "+ mathString);
+// }
 
 function calculateEvListener(){
   console.log(opRestrictor1);
-  let previous = opRestrictor1[opRestrictor1.length-1];
-  let twoPrevious = opRestrictor1[opRestrictor1.length-2];
-  console.log(mathString);
-  console.log(previous);
-  console.log(twoPrevious);
+  console.log((mathString), (previous), (twoPrevious));
   if ((previous === "operator")&&(twoPrevious === "operator")){
-      mathString = mathString.slice(0,-2)
-      console.log("After the splice, mathString is: "+ mathString);
+    console.log("calling mathStringTrim from the calculateEvListener funciton")
+    mathStringTrim(mathString);
   }
   equalsArray.push(event.target.innerHTML);
   if (mathString !== ""){
@@ -173,26 +217,49 @@ function clearEvListener(){
     console.log(clearArray);
   }
 
+
+function memoryCycle1(){
+  console.log("the memory button was hit");
+  calc_displayed.classList.add( 'display_text', 'display_dim' );
+  calc_displayed.innerHTML = "MEMORY: Your string is being stored";
+
+        setTimeout (function(){
+        calc_displayed.innerHTML = "Hit the MEM key again to see your stored strings";
+        console.log("Hit the MEM key again to see your stored strings");
+      }, 1200)
+
+      setTimeout (function(){
+        calc_displayed.classList.remove( 'display_text', 'display_dim' );
+        calc_displayed.innerHTML = "";
+        console.log("screen should now be clear");
+      }, 3000)
+}
+
+function memoryStore(){
+  console.log("Here is what you need to trigger to store a string");
+
+  if ((previous === "operator")&&(twoPrevious === "operator")){
+    console.log("calling mathStringTrim from the memEvListener funciton")
+    mathStringTrim(mathString);
+  }
+}
+
 function memEvListener(){
   let memoryEvent=event.target.id;
   memoryKeyArray.push(memoryEvent);
   console.log((typeof memoryEvent), (memoryEvent));
 
   if (memoryKeyArray.length === 1){
-    console.log("the memory button was hit");
-    calc_displayed.classList.add( 'display_text', 'display_dim' );
-    calc_displayed.innerHTML = "MEMORY: Your string is being stored";
-
-          setTimeout (function(){
-          calc_displayed.innerHTML = "Hit the MEM key again to see your stored strings";
-          console.log("Hit the MEM key again to see your stored strings");
-        }, 1200)
-
-        setTimeout (function(){
-          calc_displayed.classList.remove( 'display_text', 'display_dim' );
-          calc_displayed.innerHTML = "";
-          console.log("screen should now be clear");
-        }, 3000)
+    console.log("calling memoryCycle1 from the memEvListener funciton")
+    memoryCycle1(event.target);
+  }
+  if (memoryKeyArray.length === 2){
+    console.log("calling memoryCycle1 from the memEvListener funciton on second click")
+    memoryCycle1(event.target);
+  }
+  if (memoryKeyArray.length > 2){
+    console.log("calling memoryCycle2 from the memEvListener funciton after more than 2 clicks")
+    memoryStore(event.target);
   }
 
 }
