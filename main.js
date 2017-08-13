@@ -41,47 +41,23 @@
   let previous = opRestrictor1[opRestrictor1.length-1];
   let twoPrevious = opRestrictor1[opRestrictor1.length-2];
 
-function addToMathString() {
-  if (keyInput === "x"){
-        keyInput = "*" ;
-      }//this if statement is needed because I want letter x on the key, but need * in the string
-  console.log("Here is the keyInput: " + keyInput);
-  mathString = calc_displayed.innerHTML += keyInput;
-  console.log("Here is the mathString: " + mathString);
-}
 
 function simpleKeyEvListener(){
   keyInput = event.target.innerHTML;
   let eventTargetClasses=event.target.classList;
   // console.log((typeof eventTargetClasses), (eventTargetClasses),(eventTargetClasses[1]));// << this line was used to figure out how to obtain the operator and numeric class names.
-
-  opRestrictor1.push(eventTargetClasses[1]);
-  console.log((opRestrictor1), (opRestrictor1.length));
-  opRestrictorStr.push(eventTargetClasses[1]);
-  console.log("This is the opRestrictorStr", (opRestrictorStr));
+      opRestrictor1.push(eventTargetClasses[1]);
+      console.log((opRestrictor1), (opRestrictor1.length));
+      opRestrictorStr.push(eventTargetClasses[1]);
+      console.log("This is the opRestrictorStr", (opRestrictorStr));
 
 // Set up a conditional statement to block an operator being in the first string position
-  if ((opRestrictor1[0] === "number")&&(opRestrictor1.length===1)){  //this block takes the value associated with a key and gives it to the mathString and the display
+  if ((opRestrictor1[0] === "number")&&(opRestrictor1.length===1)){
       addToMathString(keyInput);
-          // keyInput = event.target.innerHTML;
-          // if (keyInput === "x"){
-          //       keyInput = "*" ;
-          //     }//this if statement is needed because I want letter x on the key, but need * in the string
-          // console.log("Here is the keyInput: " + keyInput);
-          // mathString = calc_displayed.innerHTML += keyInput;
-          // console.log("Here is the mathString: " + mathString);
-  }else if (opRestrictor1[0] === "operator")   {
-        calc_displayed.classList.add( 'display_text' );
-        calc_displayed.innerHTML = "please press a number";
 
-            setTimeout (function(){
-              calc_displayed.classList.remove( 'display_text' );
-              mathString.length = 0;
-              calc_displayed.innerHTML = "";
-              opRestrictor1.shift();
-              opRestrictorStr.shift();
-              console.log("The opRestrictor arrays were just shifted")
-          }, 1000)
+  }else if (opRestrictor1[0] === "operator"){
+    incorrectOperatorKeyPressed();
+    console.log("an opRestrictor1 zero index event occured")
   } // Set up a conditional statement that blocks more than one adjacent operator
   if (opRestrictorStr.length > 1) {
     console.log("the double operator restriction is being tested");
@@ -107,19 +83,56 @@ function simpleKeyEvListener(){
   }
 }
 
+function addToMathString() {//this function takes the value associated with keyInput and gives it to the mathString and the display
+  if (keyInput === "x"){
+        keyInput = "*" ;
+      }//this if statement is needed because I want letter x on the key, but need * in the string
+  console.log("Here is the keyInput: " + keyInput);
+  mathString = calc_displayed.innerHTML += keyInput;
+  console.log("Here is the mathString: " + mathString);
+}
+
+function incorrectOperatorKeyPressed(){
+  console.log("The incorrectKeyPressed function was triggered");
+  calc_displayed.classList.add( 'display_text' );
+  calc_displayed.innerHTML = "please press a number";
+
+      setTimeout (function(){
+        calc_displayed.classList.remove( 'display_text' );
+        mathString.length = 0;
+        calc_displayed.innerHTML = "";
+        opRestrictor1.shift();
+        opRestrictorStr.shift();
+        console.log("The opRestrictor arrays were just shifted")
+    }, 1000)
+}
+
 function checkOperatorSequence(){
   if ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] === "operator")){
-    // mathStringCheck(event.target);
-    // console.log("mathStringBlock was just called from the simpleKeyEvListener funciton");
-    // keyInput = "";
     console.log("the double operator restriction was triggered")
     calc_displayed.classList.add( 'display_text', 'display_dim' );
-    calc_displayed.innerHTML = "please press a number";
+    calc_displayed.innerHTML = "please press a number";//initial display is functional up to here.... need to restore screen. Rather than worry about trimming mathString... just don't allow +=keyInput.
+    displayRestore();
+    console.log("displayRestore was called....")
+
+
+    // mathStringCheck(event.target);
+    // console.log("mathStringBlock was just called from the checkOperatorSequence funciton");
+    // keyInput = "";
   }else{
     addToMathString(keyInput);
     console.log("the double operator restriction was tested but NOT triggered")
   }
 }
+
+function displayRestore(){
+        setTimeout (function(){
+          calc_displayed.classList.remove( 'display_text', 'display_dim' );
+          console.log("The display should now be restored")
+          calc_displayed.innerHTML = mathString
+        }, 1200)
+}
+
 
 // function mathStringCheck(){
 //   keyInput = "";
