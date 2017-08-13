@@ -18,7 +18,7 @@ body{
   margin: 40px auto; /* or 40px all around when in mobile mode*/
   height: 550px;
   width: 375px;
-  background-image: url('colors-1512911.png');
+  background-image: url('Background_image.png');
   position:relative;
   background-attachment: fixed;
   background-position: center;
