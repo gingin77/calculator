@@ -5,11 +5,11 @@
 /*Button classes & ids- with EventListeners added*/
   let equals = document.getElementById("equals");
   let clear_button = document.getElementById("clear");
-  let clear_store = document.getElementById("clear_and_store");
-  let sign_toggle = document.getElementById("plusMinus_toggle");
+  // let clear_store = document.getElementById("clear_and_store");
+  // let sign_toggle = document.getElementById("plusMinus_toggle");
   let memory_key = document.getElementById("memory");
-  let sqrt_key = document.getElementById("sqrt");
-  let decimal_key = document.getElementById("decimal");
+  // let sqrt_key = document.getElementById("sqrt");
+  // let decimal_key = document.getElementById("decimal");
 
   let simpleKeys = document.getElementsByClassName("easy");
   let multiplyKey = document.getElementById( "multiply" );
