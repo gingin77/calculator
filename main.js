@@ -39,6 +39,15 @@
   let opRestrictor1 = []; //< use to control 1st position; Allow to accumulate until C or = is pressed
   let opRestrictorStr = [];//< use to control subsequent positions; Str is for string; recycle at .length = 2
 
+/* In order to manage controlers besides the opRestrictor, I need another system for keeping track of all restrictors and their states. Such a system would need to take inventory of the following:
+
+    opRestrictor1,
+    a decimalRestrictor that hasn't yet been written...
+    a parantheses restrictor that hasn't yet been written....
+
+    would it be better to simply reset these restrictors when certain keys are hit?
+ */
+
 function simpleKeyEvListener(){
   keyInput = event.target.innerHTML;
   let eventTargetClasses=event.target.classList;
@@ -54,51 +63,32 @@ function simpleKeyEvListener(){
   }else if (opRestrictor1[0] === "operator"){
     incorrectOperatorKeyPressed();
     console.log("an opRestrictor1 zero index event occured")
-  } // Set up a conditional statement that blocks more than one adjacent operator
+  }
+  if ((opRestrictor1[0] === "=")&&(opRestrictor1[1] === "operator")){
+      addToMathString(keyInput);
+  }else if (opRestrictor1[0] === "operator"){
+    incorrectOperatorKeyPressed();
+    console.log("an opRestrictor1 zero index event occured")
+  }
+// Set up a conditional statement that blocks more than one adjacent operator. Once the Op.R.Str array includes 2 items, the compare function is triggered and then the array is shifted.
   if (opRestrictorStr.length > 1) {
     console.log("the double operator restriction is being tested");
     checkOperatorSequence(opRestrictorStr);
-
-        // if ((opRestrictorStr[0] === "operator") && (opRestrictorStr[1] === "operator")) {
-        //   mathStringCheck(event.target);
-        //   console.log("mathStringBlock was just called from the simpleKeyEvListener funciton");
-        //   // keyInput = "";
-        //   console.log("the double operator restriction was triggered")
-        //   calc_displayed.classList.add( 'display_text', 'display_dim' );
-        //   calc_displayed.innerHTML = "please press a number";
-    //
-    //           setTimeout (function(){
-    //             calc_displayed.classList.remove( 'display_text', 'display_dim' );
-    //             calc_displayed.innerHTML = mathString = mathString.slice(0,-1);
-    //             console.log("This is the mathString after the slice: " + (mathString));
-    //             // opRestrictorStr.shift();
-    //             console.log("The opRestrictorStr array was just shifted")
-    //           }, 1000)
-    //     // }
-    opRestrictorStr.shift();
-  }
-}
-
-function mathStringCheckLastItem(){
-  let previous = opRestrictor1[opRestrictor1.length-1];//if this is given as a global variable, then it returns as undefined (at 2 pm on 8/13)
-  // let twoPrevious = opRestrictor1[opRestrictor1.length-2];
-  console.log(opRestrictor1);
-  console.log((mathString), (previous));
-
-  if (previous === "operator")/*&&(twoPrevious === "operator"))*/{
-    console.log("calling mathStringTrim from mathStringCheckLastItem funciton")
-    mathStringTrim(mathString);
   }
 }
 
 function calculateEvListener(){
   console.log("The equals button was pressed");
   equalsArray.push(event.target.innerHTML);
-  mathStringCheckLastItem(opRestrictor1);
+  mathStringCheckLastItem(opRestrictor1);/* < this is checking if the last item added to the OpR1 array was an operator....*/
 
   if (mathString !== ""){
     calc_displayed.innerHTML = eval(mathString);
     equalsArray.length = 0;
+    opRestrictor1 = [];
+    opRestrictorStr = [];
+    opRestrictor1.push(event.target.innerHTML);
+    console.log(opRestrictor1);
 
   } else {
     calc_displayed.classList.add( 'display_text' );
@@ -122,6 +112,7 @@ function calculateEvListener(){
   } if ((mathString === "") && (equalsArray.length >= 3)){
     incorrectOperatorKeyPressed();
   }
+/*There are some problems with what happens AFTER this calculateEvListener function. THe mathStringTrim serves to remove last operators from a string, but then one is prevented from entering an operator after the result is given. I need to think this through a bit more. Should the opRestrictors both be cleared? what will that mean? */
 }
 
 function clearEvListener(){
@@ -226,11 +217,27 @@ function checkOperatorSequence(){
     calc_displayed.innerHTML = "please press a number";//initial display is functional up to here.... need to restore screen. Rather than worry about trimming mathString... just don't allow +=keyInput.
     displayRestore();
     console.log("displayRestore was called....")
+    opRestrictorStr.shift();
   }else{
     addToMathString(keyInput);
     console.log("the double operator restriction was tested but NOT triggered")
+    opRestrictorStr.shift();
   }
 }
+
+
+function mathStringCheckLastItem(){
+  let previous = opRestrictor1[opRestrictor1.length-1];//if this is given as a global variable, then it returns as undefined (at 2 pm on 8/13)
+  console.log(opRestrictor1);
+  console.log((mathString), (previous));
+
+  if (previous === "operator"){
+    console.log("calling mathStringTrim from mathStringCheckLastItem funciton")
+    mathStringTrim(mathString);
+    opRestrictorStr.pop();
+  }
+}
+
 
 function displayRestore(){
         setTimeout (function(){
