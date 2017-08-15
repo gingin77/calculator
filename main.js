@@ -64,12 +64,12 @@ function simpleKeyEvListener(){
     incorrectOperatorKeyPressed();
     console.log("an opRestrictor1 zero index event occured")
   }
-  if ((opRestrictor1[0] === "=")&&(opRestrictor1[1] === "operator")){
-      addToMathString(keyInput);
-  }else if (opRestrictor1[0] === "operator"){
-    incorrectOperatorKeyPressed();
-    console.log("an opRestrictor1 zero index event occured")
-  }
+  // if ((opRestrictor1[0] === "=")&&(opRestrictor1[1] === "operator")){
+  //     addToMathString(keyInput);
+  // }else if (opRestrictor1[0] === "operator"){
+  //   incorrectOperatorKeyPressed();
+  //   console.log("an opRestrictor1 zero index event occured")
+  // }
 // Set up a conditional statement that blocks more than one adjacent operator. Once the Op.R.Str array includes 2 items, the compare function is triggered and then the array is shifted.
   if (opRestrictorStr.length > 1) {
     console.log("the double operator restriction is being tested");
@@ -82,13 +82,15 @@ function calculateEvListener(){
   equalsArray.push(event.target.innerHTML);
   mathStringCheckLastItem(opRestrictor1);/* < this is checking if the last item added to the OpR1 array was an operator....*/
 
+
   if (mathString !== ""){
+    memoryStore(mathString);
     calc_displayed.innerHTML = eval(mathString);
     equalsArray.length = 0;
-    opRestrictor1 = [];
-    opRestrictorStr = [];
-    opRestrictor1.push(event.target.innerHTML);
+    opRestrictor1.push("number");
+    opRestrictorStr.push("number");
     console.log(opRestrictor1);
+    console.log(opRestrictorStr);
 
   } else {
     calc_displayed.classList.add( 'display_text' );
@@ -164,6 +166,7 @@ function memEvListener(){
   memoryKeyArray.push(memoryEvent);
   let length_less = memoryKeyArray.length - 1;
   console.log((typeof memoryEvent), (memoryEvent));
+  mathStringCheckLastItem(mathString);
   memoryStore(mathString);
 
 
@@ -218,39 +221,44 @@ function checkOperatorSequence(){
     displayRestore();
     console.log("displayRestore was called....")
     opRestrictorStr.shift();
+    console.log(opRestrictorStr);
   }else{
     addToMathString(keyInput);
     console.log("the double operator restriction was tested but NOT triggered")
     opRestrictorStr.shift();
+    console.log(opRestrictorStr);
   }
 }
 
 
 function mathStringCheckLastItem(){
   let previous = opRestrictor1[opRestrictor1.length-1];//if this is given as a global variable, then it returns as undefined (at 2 pm on 8/13)
-  console.log(opRestrictor1);
-  console.log((mathString), (previous));
+    console.log(opRestrictor1);
+    console.log((mathString), (previous));
 
   if (previous === "operator"){
-    console.log("calling mathStringTrim from mathStringCheckLastItem funciton")
+    console.log("calling mathStringTrim from mathStringCheckLastItem function")
     mathStringTrim(mathString);
-    opRestrictorStr.pop();
+    // opRestrictorStr.pop();
   }
 }
 
 
 function displayRestore(){
-        setTimeout (function(){
-          calc_displayed.classList.remove( 'display_text', 'display_dim' );
-          console.log("The display should now be restored")
-          calc_displayed.innerHTML = mathString
-        }, 1200)
+    setTimeout (function(){
+      calc_displayed.classList.remove( 'display_text', 'display_dim' );
+      console.log("The display should now be restored")
+      calc_displayed.innerHTML = mathString
+    }, 1200)
 }
 
 function mathStringTrim(){
   mathString = mathString.slice(0,-1)
   console.log("After the splice, mathString is: "+ mathString);
-  opRestrictorStr.shift();
+  opRestrictorStr.pop();
+  console.log(opRestrictorStr);
+  opRestrictor1.pop();
+  console.log(opRestrictor1);
 }
 
 function memoryCycle1(){
@@ -272,7 +280,7 @@ function memoryCycle1(){
 
 function memoryStore(){
   console.log("The memoryStore function has been triggered");
-  mathStringCheckLastItem(mathString);
+  // mathStringCheckLastItem(mathString);
   storedMemoryArray.push(mathString);
   console.log("The storedMemoryArray now includes: " + storedMemoryArray);
   }
