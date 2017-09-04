@@ -36,10 +36,10 @@
   let equalsArray = [];
   let storedMemoryArray = [];// <used to store mathString values
   let memoryKeyArray = []; //< used to keep track of how many times the mem key is pressed
-  let opRestrictor1 = []; //< use to control 1st position; Allow to accumulate until C or = is pressed
-  let opRestrictorStr = [];//< use to control subsequent positions; Str is for string; recycle at .length = 2
+  let opRestrictor1 = []; //< use to control 1st position; Allow to accumulate until C is pressed
+  let opRestrictorStr = [];//< use to control subsequent positions; Str is for string; recycle at .length  > 1
 
-/* In order to manage controlers besides the opRestrictor, I need another system for keeping track of all restrictors and their states. Such a system would need to take inventory of the following:
+/* In order to manage controlers besides the opRestrictor, I may need another system for keeping track of all restrictors and their states. Such a system would need to take inventory of the following:
 
     opRestrictor1,
     a decimalRestrictor that hasn't yet been written...

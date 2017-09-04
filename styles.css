@@ -50,7 +50,7 @@ button{
   font-weight: 900;
   border: 3px solid #2F0075;
   border-radius: 5px;
-  padding: 1vh 2vw 2vh;
+  /*padding: 1vh 2vw 2vh;*/
   margin: 4px;
 }
 
